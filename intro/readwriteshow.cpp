@@ -15,6 +15,8 @@ bool exists_file (const char *filename) {
 void
 process(const char* imsname, const char* imdname)
 {
+  std::cout<<"\n\n\n ===================================================\n EXERCICE 1 : READWRITESHOW \n ===================================================" <<std::endl;
+
   bool exist = exists_file(imsname);
   if(!exist){
     std::cerr<<"The file doesn't exist, check its location.\n"<<std::endl;

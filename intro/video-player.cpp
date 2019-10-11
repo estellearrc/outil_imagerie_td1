@@ -27,6 +27,8 @@ void onTrackbarSlide(int, void*)
 void
 process(const char* vidname)
 {
+  std::cout<<"\n\n\n ===================================================\n EXERCICE 4 : VIDEO PLAYER \n ===================================================" <<std::endl;
+
   bool exist = exists_file(vidname);
   if(!exist){
     std::cerr<<"The file doesn't exist, check its location.\n"<<std::endl;
@@ -72,10 +74,11 @@ process(const char* vidname)
     imshow("video",frame);
 
     char c=(char)waitKey(30);
-    if(c==27)
+    if(c>=0)
       break;
   }
   cap.release();
+  destroyAllWindows();
 }
 
 void 

@@ -11,6 +11,9 @@ using namespace std;
 void
 process(const char* imsname, int i0, int j0, int w, int h)
 {
+  std::cout<<"\n\n\n ===================================================\n EXERCICE 2 : CROP \n ===================================================" <<std::endl;
+
+
 	Mat image;
 	image=imread(imsname,CV_LOAD_IMAGE_COLOR);
 	Mat imgcrop(h, w, CV_8UC3);

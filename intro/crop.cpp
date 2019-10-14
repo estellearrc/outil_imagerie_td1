@@ -13,9 +13,9 @@ process(const char* imsname, int i0, int j0, int w, int h)
 {
   std::cout<<"\n\n\n ===================================================\n EXERCICE 2 : CROP \n ===================================================" <<std::endl;
 
-
 	Mat image;
 	image=imread(imsname,CV_LOAD_IMAGE_COLOR);
+  //Extracting the cropped image from the image "imsname" with 'at' method
 	Mat imgcrop(h, w, CV_8UC3);
 	for (int i = 0; i < h; i++){
 		for(int j = 0; j < w; j++){
@@ -24,9 +24,11 @@ process(const char* imsname, int i0, int j0, int w, int h)
 	}
   imwrite("crop.png", imgcrop);
 
+  //Extracting the cropped image from the image "imsname" with 'Rect' method
   Mat imgCropRect = image(Rect(j0,i0,w,h));
   imwrite("crop-cv.png", imgCropRect);
 
+  //Calculating the pixel difference between the two cropped images
   Mat diff = imgcrop - imgCropRect;
   imshow("diff",diff);
   waitKey(0);

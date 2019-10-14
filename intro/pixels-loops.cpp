@@ -16,7 +16,10 @@ process(const char* imsname)
   Size s = ims.size();
   std::cout<<"Image size H = " << s.height << " W = " << s.width << "\n" <<std::endl;
 
-
+  //=======================================================================
+  //Proceed with the 'pointer' method
+  //=======================================================================
+  //Get the number of cycles passed
   double t = (double)getTickCount();
   for(int r = 0; r < ims.rows; r++) {
     // We obtain a pointer to the beginning of row r
@@ -25,10 +28,15 @@ process(const char* imsname)
       // We invert the blue and red values of the pixel
       ptr[c] = Vec3b(64*ptr[c][0]/64+64/2, 64*ptr[c][1]/64+64/2, 64*ptr[c][2]/64+64/2);
     }
-  }t = ((double)getTickCount() - t)/getTickFrequency();
+  }
+  //Convert the number of cycles passed into seconds
+  t = ((double)getTickCount() - t)/getTickFrequency();
   cout << "Access with pointers. Times passed in seconds: " << t << endl;
 
 
+  //=======================================================================
+  //Proceed with the 'iterator' method
+  //=======================================================================
   t = (double)getTickCount();
   Mat_<Vec3b>::iterator it = ims.begin<Vec3b>();
   Mat_<Vec3b>::iterator itEnd = ims.end<Vec3b>();
@@ -42,6 +50,9 @@ process(const char* imsname)
   cout << "Access with iterators. Times passed in seconds: " << t << endl;
   
 
+  //=======================================================================
+  //Proceed with the 'at' method
+  //=======================================================================
   t = (double)getTickCount();
   // do something ...
   for (int i = 0; i < s.height; i++){
@@ -55,8 +66,10 @@ process(const char* imsname)
   cout << "Access with 'at' method. Times passed in seconds: " << t << endl;
 
 
+  //=======================================================================
+  //Proceed with opencv operator redefinition
+  //=======================================================================
   t = (double)getTickCount();
-  // do something ...
   ims = 64*ims/64+64/2;
   t = ((double)getTickCount() - t)/getTickFrequency();
   cout << "Access with opencv operator redinition. Times passed in seconds: " << t << endl;

@@ -9,7 +9,7 @@
 using namespace cv;
 using namespace std;
 
-int slider_pos; //slider pos value
+int slider_pos; //slider position value
 int slider_max; //slider max value
 VideoCapture cap;
 
@@ -20,8 +20,9 @@ bool exists_file (const char *filename) {
 
 void onTrackbarSlide(int, void*)
 {
-    cap.set(CV_CAP_PROP_POS_FRAMES, slider_pos);
-    std::cout << "to go to frame number = " << slider_pos << "\n" << std::endl;
+  //Set the trackbar's slider to the position "slider_pos"
+  cap.set(CV_CAP_PROP_POS_FRAMES, slider_pos);
+  std::cout << "to go to frame number = " << slider_pos << std::endl;
 }
 
 void
@@ -35,9 +36,10 @@ process(const char* vidname)
     exit(EXIT_FAILURE);
   }
 
+  //Opening the video "vidname"
   cap = VideoCapture(vidname);
   Mat frame;
-  namedWindow("video",1);
+  namedWindow(vidname,1);
 
   double fps  = cap.get(CV_CAP_PROP_FPS);
   double width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
@@ -49,30 +51,36 @@ process(const char* vidname)
   
   slider_pos = 0;
   slider_max = nbOfFrames;
-  //make trackbar call back
-  createTrackbar("slider", "video", &slider_pos, slider_max, onTrackbarSlide);
+  //Create and make trackbar call back
+  createTrackbar("slider", vidname, &slider_pos, slider_max, onTrackbarSlide);
 
 
   while(1){
+    //Read the video frame by frame 
     cap >> frame;
     if(!frame.data)
+      //if the frame is empty
       break;
     int currentFrame = cap.get(CV_CAP_PROP_POS_FRAMES);
     if(currentFrame >= 1000){
       if(slider_pos >= 1000){
+        //if the slider's position is >= 1000, the frame to display is set by the slider_pos
         cap.set(CV_CAP_PROP_POS_FRAMES, slider_pos);
       }
       else{
+        //if the slider's position is < 1000, play the video with its native fps rate
         cap.set(CV_CAP_PROP_POS_FRAMES, 1000);
       }
     }
 
+    //Displaying the current frame number on the video
     std::stringstream sstm;
     sstm << "frame number = " << cap.get(CV_CAP_PROP_POS_FRAMES) ;
     string result = sstm.str();
     putText(frame, result, Point2f(20,20), FONT_HERSHEY_PLAIN, 1, Scalar(255,255,255,255));
-    imshow("video",frame);
+    imshow(vidname,frame);
 
+    //Close the video window whenever a key is pressed
     char c=(char)waitKey(30);
     if(c>=0)
       break;

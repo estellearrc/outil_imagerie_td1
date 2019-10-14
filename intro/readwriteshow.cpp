@@ -8,6 +8,7 @@ using namespace cv;
 using namespace std;
 
 bool exists_file (const char *filename) {
+  //check if the file "filename" exists in the current repository
     ifstream f(filename);
     return f.good();
 }
@@ -22,10 +23,13 @@ process(const char* imsname, const char* imdname)
     std::cerr<<"The file doesn't exist, check its location.\n"<<std::endl;
     exit(EXIT_FAILURE);
   }
+  //Read the image "imsname"
   Mat image = imread(imsname, CV_LOAD_IMAGE_COLOR);
   int rows = image.rows;
   int cols = image.cols;
   std::cout<<"Number rows = " << rows << " number columns = " << cols << "\n" <<std::endl;
+
+  //Create and show a magenta picture
   Mat magenta(100, 200, CV_8UC3, Scalar(255,0,255));
   imshow("magenta", magenta);
   imshow(imsname, image);

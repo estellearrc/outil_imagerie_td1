@@ -10,9 +10,15 @@ using namespace std;
 void 
 process(const char* imsname)
 {
+  (void) imsname;
   std::cout<<"\n\n\n ===================================================\n EXERCICE 3 : PIXELS LOOPS \n ===================================================" <<std::endl;
 
-  Mat ims = imread(imsname,CV_LOAD_IMAGE_COLOR);
+  //Resize "lena_color.png" and save the bigger image "lena_color_10000.png" into "data" folder
+  string st = "convert -resize 10240 "+ std::string(imsname) + " ../data/lena_color_10000.png";
+  cout << "Creating a bigger image..." << endl;
+  system(st.c_str());
+  cout << "... Done!" << endl;
+  Mat ims = imread("../data/lena_color_10000.png",CV_LOAD_IMAGE_COLOR);
   Size s = ims.size();
   std::cout<<"Image size H = " << s.height << " W = " << s.width << "\n" <<std::endl;
 
